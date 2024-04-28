@@ -1,55 +1,61 @@
-// Create a "close" button and append it to each list item
-var myNodelist = document.getElementsByTagName("LI");
-var i;
-for (i = 0; i < myNodelist.length; i++) {
-  var span = document.createElement("SPAN");
-  var txt = document.createTextNode("\u00D7");
-  span.className = "close";
-  span.appendChild(txt);
-  myNodelist[i].appendChild(span);
+const nodeList = document.getElementsByTagName('li');
+for (let i = 0; i < nodeList.length; i++) {
+    const span = document.createElement('span');
+    const txt = document.createTextNode('\u00D7');
+    span.className = 'close';
+    span.appendChild(txt);
+    nodeList[i].appendChild(span);
 }
-
-// Click on a close button to hide the current list item
-var close = document.getElementsByClassName("close");
-var i;
-for (i = 0; i < close.length; i++) {
-  close[i].onclick = function () {
-    var div = this.parentElement;
-    div.style.display = "none";
-  }
+let closeButtons = document.getElementsByClassName('close');
+for (let i = 0; i < closeButtons.length; i++) {
+    let closeButton = closeButtons[i];
+    closeButton.addEventListener('click', () => {
+        const li = closeButton.parentElement;
+        if (!!li) {
+            li.style.display = 'none';
+        }
+    });
 }
-
-// Add a "checked" symbol when clicking on a list item
-var list = document.querySelector('ul');
-list.addEventListener('click', function (ev) {
-  if (ev.target.tagName === 'LI') {
-    ev.target.classList.toggle('checked');
-  }
-}, false);
-
-// Create a new list item when clicking on the "Add" button
-function newElement() {
-  var li = document.createElement("li");
-  var inputValue = document.getElementById("myInput").value;
-  var t = document.createTextNode(inputValue);
-  li.appendChild(t);
-  if (inputValue === '') {
-    alert("You must write something!");
-  } else {
-    document.getElementById("myUL").appendChild(li);
-  }
-  document.getElementById("myInput").value = "";
-
-  var span = document.createElement("SPAN");
-  var txt = document.createTextNode("\u00D7");
-  span.className = "close";
-  span.appendChild(txt);
-  li.appendChild(span);
-
-  for (i = 0; i < close.length; i++) {
-    close[i].onclick = function () {
-      var div = this.parentElement;
-      div.style.display = "none";
+const list = document.querySelector('ul');
+if (list) {
+    list.addEventListener('click', (ev) => {
+        let target = ev.target;
+        if (target && target.tagName === 'li') {
+            target.classList.toggle('checked');
+        }
+    }, false);
+}
+function addElement() {
+    const li = document.createElement('li');
+    const input = document.getElementById('input');
+    if (!input) {
+        return;
     }
-  }
+    const inputValue = input.value;
+    const textNode = document.createTextNode(inputValue);
+    li.appendChild(textNode);
+    if (inputValue === '') {
+        alert('You must write something!');
+    }
+    else {
+        const ul = document.getElementById('list');
+        if (ul) {
+            ul.appendChild(li);
+        }
+    }
+    input.value = '';
+    const span = document.createElement('span');
+    const txt = document.createTextNode('\u00D7');
+    span.className = 'close';
+    span.appendChild(txt);
+    li.appendChild(span);
+    span.addEventListener('click', () => {
+        const li = span.parentElement;
+        if (!!li) {
+            li.style.display = 'none';
+        }
+    });
 }
+const addBtn = document.getElementById('add');
+addBtn === null || addBtn === void 0 ? void 0 : addBtn.addEventListener('click', () => addElement());
+export {};
